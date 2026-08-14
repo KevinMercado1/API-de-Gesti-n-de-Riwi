@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { connectDB } from './config/db';
 import tlRoute from './routes/tl.route';
 import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 
 const { PORT } = process.env;
 
@@ -10,8 +11,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use();
-app.use('/tl', tlRoute);
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(PORT, async () => {
   await connectDB();
