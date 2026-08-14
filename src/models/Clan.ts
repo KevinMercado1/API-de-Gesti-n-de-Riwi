@@ -4,11 +4,12 @@ interface IClan {
   name: string;
 }
 
-const ClanSchema = new Schema<IClan>({
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  {timestamps: true},
-});
+const ClanSchema = new Schema<IClan>(
+  {
+    name: { type: String, required: true },
+  },
+  { timestamps: true },
+);
 
 const ClanModel = model<IClan>('Clan', ClanSchema);
 

@@ -1,20 +1,25 @@
 import express from 'express';
 import 'dotenv/config';
-import { connectDB } from './config/db';
-import tlRoute from './routes/tl.route';
+import { connectDB } from './config/db.js';
+import tlRoute from './routes/tl.route.js';
+// import coderRoute from './routes/coder.route.js';
+// import clanRoute from './routes/clan.route.js';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec } from './config/swagger';
+import YAML from 'yamljs';
 
 const { PORT } = process.env;
 
 const app = express();
 
+const swaggerDocument = YAML.load('./swagger.yml');
+
 app.use(express.json());
 
-app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, async () => {
   await connectDB();
 
   console.log(`Server is running on port http://localhost:${PORT}`);
+  console.log(`Swagger docs at http://localhost:${PORT}/api-docs`);
 });

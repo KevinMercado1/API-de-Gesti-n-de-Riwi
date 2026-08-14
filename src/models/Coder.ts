@@ -6,17 +6,19 @@ interface ICoder {
   status: 'Activo' | 'Retirado';
 }
 
-const CodeSchema = new Schema<ICode>({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  status: {
-    type: String,
-    required: true,
-    enum: ['Activo', 'Retirado'],
-    default: 'Activo',
+const CoderSchema = new Schema<ICoder>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    status: {
+      type: String,
+      required: true,
+      enum: ['Activo', 'Retirado'],
+      default: 'Activo',
+    },
   },
-  {timestamps: true}
-});
+  { timestamps: true },
+);
 
 const CoderModel = model<ICoder>('Coder', CoderSchema);
 

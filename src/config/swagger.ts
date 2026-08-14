@@ -12,7 +12,7 @@ const options: swaggerJSDoc.Options = {
       schemas: {
         TL: {
           type: 'object',
-          required: ['name', 'description, position'],
+          required: ['name', 'description', 'position'],
           properties: {
             id: {
               type: 'string',
@@ -32,6 +32,42 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
+        Coder: {
+          type: 'object',
+          required: ['name', 'email', 'status'],
+          properties: {
+            id: {
+              type: 'string',
+              example: 'fvbSVKSLVJNLdvk',
+            },
+            name: {
+              type: 'string',
+              example: 'nuevo coder',
+            },
+            email: {
+              type: 'string',
+              example: 'coder@example.com',
+            },
+            status: {
+              type: 'string',
+              example: 'Activo',
+            },
+          },
+        },
+        Clan: {
+          type: 'object',
+          required: ['name', 'description'],
+          properties: {
+            id: {
+              type: 'string',
+              example: '60d5ec49f1b2c4a4e4e9f123',
+            },
+            name: {
+              type: 'string',
+              example: 'Clan de Desarrolladores',
+            },
+          },
+        },
       },
     },
     servers: [
@@ -40,7 +76,6 @@ const options: swaggerJSDoc.Options = {
       },
     ],
   },
-
   apis: ['./src/routes/*.ts'],
 };
 

@@ -1,14 +1,14 @@
 import express, { type Request, type Response } from 'express';
-import TLModel from '../models/TL';
+import TLModel from '../models/TL.js';
 
 const router = express.Router();
 
 // Create a new TL
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, description, Position } = req.body;
+    const { name, description, position } = req.body;
 
-    const newTl = await TLModel.create({ name, description, Position });
+    const newTl = await TLModel.create({ name, description, position });
     res.status(201).json(newTl);
   } catch (error) {
     res.status(500).json({ message: 'Error creating TL', error });

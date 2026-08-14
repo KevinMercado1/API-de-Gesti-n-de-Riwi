@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+  title: Riwi Management API
+  version: '1.0.0'
+  description: API hecha con Swagger
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /tls:
+    get:
+      summary: Obtener todos los TLs
+      tags:
+        - TL
+      responses:
+        '200':
+          description: Lista de TLs obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TL'
+        '500':
+          description: Error al obtener los TLs
+    post:
+      summary: Crear un nuevo TL
+      tags:
+        - TL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - position
+              properties:
+                name:
+                  type: string
+                  example: nueva tarea
+                description:
+                  type: string
+                  example: Este es un breve ejemplo de una descripcion
+                position:
+                  type: string
+                  example: Backend Senior Developer
+      responses:
+        '201':
+          description: TL creado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TL'
+        '500':
+          description: Error al crear el TL
+
+  /tls/{id}:
+    put:
+      summary: Actualizar un TL existente
+      tags:
+        - TL
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del TL a actualizar
+          example: fvbSVKSLVJNLdvk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: tarea actualizada
+                description:
+                  type: string
+                  example: Descripción actualizada
+                position:
+                  type: string
+                  example: Tech Lead
+      responses:
+        '200':
+          description: TL actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TL'
+        '404':
+          description: TL no encontrado
+        '500':
+          description: Error al actualizar el TL
+    delete:
+      summary: Eliminar un TL
+      tags:
+        - TL
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del TL a eliminar
+          example: fvbSVKSLVJNLdvk
+      responses:
+        '200':
+          description: TL eliminado con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: TL eliminado correctamente
+        '404':
+          description: TL no encontrado
+        '500':
+          description: Error al eliminar el TL
+
+components:
+  schemas:
+    TL:
+      type: object
+      required:
+        - name
+        - description
+        - position
+      properties:
+        id:
+          type: string
+          example: fvbSVKSLVJNLdvk
+        name:
+          type: string
+          example: nueva tarea
+        description:
+          type: string
+          example: Este es un breve ejemplo de una descripcion
+        position:
+          type: string
+          example: Backend Senior Developer
+    Coder:
+      type: object
+      required:
+        - name
+        - email
+        - status
+      properties:
+        id:
+          type: string
+          example: fvbSVKSLVJNLdvk
+        name:
+          type: string
+          example: nuevo coder
+        email:
+          type: string
+          example: coder@example.com
+        status:
+          type: string
+          example: Activo
+    Clan:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          example: 60d5ec49f1b2c4a4e4e9f123
+        name:
+          type: string
+          example: Clan de Desarrolladores

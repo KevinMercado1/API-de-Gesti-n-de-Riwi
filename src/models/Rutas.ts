@@ -5,11 +5,13 @@ interface IRutas {
   descripcion: string;
 }
 
-const RutasSchema = new Schema<IRutas>({
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  {timestamps: true},
-});
+const RutasSchema = new Schema<IRutas>(
+  {
+    name: { type: String, required: true },
+    descripcion: { type: String, required: true },
+  },
+  { timestamps: true },
+);
 
 const RutasModel = model<IRutas>('Rutas', RutasSchema);
 
