@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from 'express';
-import { TLModel } from '../models/TL';
+import TLModel from '../models/TL';
 
 const router = express.Router();
 

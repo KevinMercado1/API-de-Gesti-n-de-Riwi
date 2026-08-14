@@ -1,15 +1,16 @@
 import { Schema, model } from 'mongoose';
 
-interface IClan {
+interface IRutas {
   name: string;
+  descripcion: string;
 }
 
-const ClanSchema = new Schema<IClan>({
+const RutasSchema = new Schema<IRutas>({
   name: { type: String, required: true },
   description: { type: String, required: true },
   {timestamps: true},
 });
 
-const ClanModel = model<IClan>('Clan', ClanSchema);
+const RutasModel = model<IRutas>('Rutas', RutasSchema);
 
-export default ClanModel;
+export default RutasModel;

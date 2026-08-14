@@ -4,16 +4,15 @@ const options: swaggerJSDoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'TodoApp',
+      title: 'Riwi Management API',
       version: '1.0.0',
-      description:
-        'API desarrollada con Express y TypeScript en el clan Centurion',
+      description: 'API hecha con Swagger',
     },
     components: {
       schemas: {
-        Task: {
+        TL: {
           type: 'object',
-          required: ['name', 'status'],
+          required: ['name', 'description, position'],
           properties: {
             id: {
               type: 'string',
@@ -23,9 +22,13 @@ const options: swaggerJSDoc.Options = {
               type: 'string',
               example: 'nueva tarea',
             },
-            status: {
+            description: {
               type: 'string',
-              example: 'pending|completed',
+              example: 'Este es un breve ejemplo de una descripcion',
+            },
+            position: {
+              type: 'string',
+              example: 'Backend Senior Developer',
             },
           },
         },
