@@ -1,3 +1,4 @@
+import { describe } from 'node:test';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const options: swaggerJSDoc.Options = {
@@ -6,7 +7,7 @@ const options: swaggerJSDoc.Options = {
     info: {
       title: 'Riwi Management API',
       version: '1.0.0',
-      description: 'API hecha con Swagger',
+      description: 'API built with Swagger',
     },
     components: {
       schemas: {
@@ -20,11 +21,11 @@ const options: swaggerJSDoc.Options = {
             },
             name: {
               type: 'string',
-              example: 'nueva tarea',
+              example: 'new task',
             },
             description: {
               type: 'string',
-              example: 'Este es un breve ejemplo de una descripcion',
+              example: 'This is a brief example of a description',
             },
             position: {
               type: 'string',
@@ -42,7 +43,7 @@ const options: swaggerJSDoc.Options = {
             },
             name: {
               type: 'string',
-              example: 'nuevo coder',
+              example: 'new coder',
             },
             email: {
               type: 'string',
@@ -50,7 +51,7 @@ const options: swaggerJSDoc.Options = {
             },
             status: {
               type: 'string',
-              example: 'Activo',
+              example: 'Active',
             },
           },
         },
@@ -64,7 +65,25 @@ const options: swaggerJSDoc.Options = {
             },
             name: {
               type: 'string',
-              example: 'Clan de Desarrolladores',
+              example: 'Clan of Developers',
+            },
+            description: {
+              type: 'string',
+              example: 'A clan for developers',
+            },
+          },
+        },
+        Route: {
+          type: 'object',
+          required: ['name', 'description'],
+          properties: {
+            id: {
+              type: 'string',
+              example: '60d5ec49f1b2c4a4e4e9f123',
+            },
+            name: {
+              type: 'string',
+              example: 'Route of Developers',
             },
           },
         },

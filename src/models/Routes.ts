@@ -1,11 +1,11 @@
 import { Schema, model } from 'mongoose';
 
-interface IClan {
+interface IRoutes {
   name: string;
   description: string;
 }
 
-const ClanSchema = new Schema<IClan>(
+const RoutesSchema = new Schema<IRoutes>(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -13,6 +13,6 @@ const ClanSchema = new Schema<IClan>(
   { timestamps: true }
 );
 
-const ClanModel = model<IClan>('Clan', ClanSchema);
+const RoutesModel = model<IRoutes>('Routes', RoutesSchema);
 
-export default ClanModel;
+export default RoutesModel;

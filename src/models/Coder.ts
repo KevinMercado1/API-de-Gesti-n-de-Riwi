@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 interface ICoder {
   name: string;
   email: string;
-  status: 'Activo' | 'Retirado';
+  status: 'Active' | 'Retired';
 }
 
 const CoderSchema = new Schema<ICoder>(
@@ -13,11 +13,11 @@ const CoderSchema = new Schema<ICoder>(
     status: {
       type: String,
       required: true,
-      enum: ['Activo', 'Retirado'],
-      default: 'Activo',
+      enum: ['Active', 'Retired'],
+      default: 'Active',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const CoderModel = model<ICoder>('Coder', CoderSchema);

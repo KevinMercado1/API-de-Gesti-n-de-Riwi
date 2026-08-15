@@ -14,7 +14,7 @@ const TLSchema = new Schema<ITL>(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 const TLModel = model<ITL>('TL', TLSchema);

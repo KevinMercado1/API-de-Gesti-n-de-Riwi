@@ -2,19 +2,20 @@ openapi: 3.0.0
 info:
   title: Riwi Management API
   version: '1.0.0'
-  description: API hecha con Swagger
+  description: API built with Swagger for managing TLs, Coders, Clans, and Routes.
 servers:
   - url: http://localhost:3000
 
 paths:
+  # --- TL'S ROUTES ---
   /tls:
     get:
-      summary: Obtener todos los TLs
+      summary: Get all TLs
       tags:
         - TL
       responses:
         '200':
-          description: Lista de TLs obtenida con éxito
+          description: List of TLs retrieved successfully
           content:
             application/json:
               schema:
@@ -22,9 +23,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/TL'
         '500':
-          description: Error al obtener los TLs
+          description: Error retrieving TLs
     post:
-      summary: Crear un nuevo TL
+      summary: Create a new TL
       tags:
         - TL
       requestBody:
@@ -40,26 +41,26 @@ paths:
               properties:
                 name:
                   type: string
-                  example: nueva tarea
+                  example: new TL
                 description:
                   type: string
-                  example: Este es un breve ejemplo de una descripcion
+                  example: This is a brief example of a description
                 position:
                   type: string
                   example: Backend Senior Developer
       responses:
         '201':
-          description: TL creado con éxito
+          description: TL created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TL'
         '500':
-          description: Error al crear el TL
+          description: Error creating TL
 
   /tls/{id}:
     put:
-      summary: Actualizar un TL existente
+      summary: Update an existing TL
       tags:
         - TL
       parameters:
@@ -68,7 +69,7 @@ paths:
           required: true
           schema:
             type: string
-          description: ID del TL a actualizar
+          description: ID of the TL to update
           example: fvbSVKSLVJNLdvk
       requestBody:
         required: true
@@ -79,26 +80,26 @@ paths:
               properties:
                 name:
                   type: string
-                  example: tarea actualizada
+                  example: updated task
                 description:
                   type: string
-                  example: Descripción actualizada
+                  example: Updated description
                 position:
                   type: string
                   example: Tech Lead
       responses:
         '200':
-          description: TL actualizado con éxito
+          description: TL updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TL'
         '404':
-          description: TL no encontrado
+          description: TL not found
         '500':
-          description: Error al actualizar el TL
+          description: Error updating TL
     delete:
-      summary: Eliminar un TL
+      summary: Delete a TL
       tags:
         - TL
       parameters:
@@ -107,11 +108,11 @@ paths:
           required: true
           schema:
             type: string
-          description: ID del TL a eliminar
+          description: ID of the TL to delete
           example: fvbSVKSLVJNLdvk
       responses:
         '200':
-          description: TL eliminado con éxito
+          description: TL deleted successfully
           content:
             application/json:
               schema:
@@ -119,11 +120,347 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: TL eliminado correctamente
+                    example: TL deleted successfully
         '404':
-          description: TL no encontrado
+          description: TL not found
         '500':
-          description: Error al eliminar el TL
+          description: Error deleting TL
+
+  # --- CODER'S ROUTES ---
+  /coders:
+    get:
+      summary: Get all Coders
+      tags:
+        - Coder
+      responses:
+        '200':
+          description: List of Coders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coder'
+        '500':
+          description: Error retrieving Coders
+    post:
+      summary: Create a new Coder
+      tags:
+        - Coder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - status
+              properties:
+                name:
+                  type: string
+                  example: new coder
+                email:
+                  type: string
+                  example: coder@example.com
+                status:
+                  type: string
+                  example: Active
+      responses:
+        '201':
+          description: Coder created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coder'
+        '500':
+          description: Error creating Coder
+
+  /coders/{id}:
+    put:
+      summary: Update an existing Coder
+      tags:
+        - Coder
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Coder to update
+          example: fvbSVKSLVJNLdvk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Coder Updated
+                email:
+                  type: string
+                  example: coder_updated@example.com
+                status:
+                  type: string
+                  example: Inactive
+      responses:
+        '200':
+          description: Coder updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coder'
+        '404':
+          description: Coder not found
+        '500':
+          description: Error updating Coder
+    delete:
+      summary: Delete a Coder
+      tags:
+        - Coder
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Coder to delete
+          example: fvbSVKSLVJNLdvk
+      responses:
+        '200':
+          description: Coder deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Coder deleted successfully
+        '404':
+          description: Coder not found
+        '500':
+          description: Error deleting Coder
+
+  # --- CLAN'S ROUTES ---
+  /clans:
+    get:
+      summary: Get all Clans
+      tags:
+        - Clan
+      responses:
+        '200':
+          description: List of Clans retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Clan'
+        '500':
+          description: Error retrieving Clans
+    post:
+      summary: Create a new Clan
+      tags:
+        - Clan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+              properties:
+                name:
+                  type: string
+                  example: Clan of Developers
+                description:
+                  type: string
+                  example: A clan for developers
+      responses:
+        '201':
+          description: Clan created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clan'
+        '500':
+          description: Error creating Clan
+
+  /clans/{id}:
+    put:
+      summary: Update an existing Clan
+      tags:
+        - Clan
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Clan to update
+          example: 60d5ec49f1b2c4a4e4e9f123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Clan Updated
+                description:
+                  type: string
+                  example: A clan for developers
+      responses:
+        '200':
+          description: Clan updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clan'
+        '404':
+          description: Clan not found
+        '500':
+          description: Error updating Clan
+    delete:
+      summary: Delete a Clan
+      tags:
+        - Clan
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Clan to delete
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: Clan deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Clan deleted successfully
+        '404':
+          description: Clan not found
+        '500':
+          description: Error deleting Clan
+
+  # --- ROUTE'S ROUTES ---
+  /routes:
+    get:
+      summary: Get all Routes
+      tags:
+        - Route
+      responses:
+        '200':
+          description: List of Routes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Route'
+        '500':
+          description: Error retrieving Routes
+    post:
+      summary: Create a new Route
+      tags:
+        - Route
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: Route of Developers
+      responses:
+        '201':
+          description: Route created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '500':
+          description: Error creating Route
+
+  /routes/{id}:
+    put:
+      summary: Update an existing Route
+      tags:
+        - Route
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Route to update
+          example: 60d5ec49f1b2c4a4e4e9f123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Route Updated
+      responses:
+        '200':
+          description: Route updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '404':
+          description: Route not found
+        '500':
+          description: Error updating Route
+    delete:
+      summary: Delete a Route
+      tags:
+        - Route
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Route to delete
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: Route deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Route deleted successfully
+        '404':
+          description: Route not found
+        '500':
+          description: Error deleting Route
 
 components:
   schemas:
@@ -139,13 +476,14 @@ components:
           example: fvbSVKSLVJNLdvk
         name:
           type: string
-          example: nueva tarea
+          example: new task
         description:
           type: string
-          example: Este es un breve ejemplo de una descripcion
+          example: This is a brief example of a description
         position:
           type: string
           example: Backend Senior Developer
+
     Coder:
       type: object
       required:
@@ -158,13 +496,14 @@ components:
           example: fvbSVKSLVJNLdvk
         name:
           type: string
-          example: nuevo coder
+          example: new coder
         email:
           type: string
           example: coder@example.com
         status:
           type: string
-          example: Activo
+          example: Active
+
     Clan:
       type: object
       required:
@@ -175,4 +514,18 @@ components:
           example: 60d5ec49f1b2c4a4e4e9f123
         name:
           type: string
-          example: Clan de Desarrolladores
+          example: Clan of Developers
+          description: The name of the Clan
+
+    Route:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          example: 60d5ec49f1b2c4a4e4e9f123
+        name:
+          type: string
+          example: Route of Developers
+          description: The name of the training route
