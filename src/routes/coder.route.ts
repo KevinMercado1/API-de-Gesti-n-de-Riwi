@@ -68,7 +68,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const updatedCoder = await Coder.findByIdAndUpdate(
       id,
       { name, email, status, shift, clanId },
-      { new: true },
+      { new: true }
     ).populate('clanId');
 
     if (!updatedCoder) {

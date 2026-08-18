@@ -68,7 +68,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const updatedClan = await Clan.findByIdAndUpdate(
       id,
       { name, shift, routeId },
-      { new: true },
+      { new: true }
     ).populate('routeId');
 
     if (!updatedClan) {

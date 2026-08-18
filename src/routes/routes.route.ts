@@ -68,7 +68,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const updatedRoute = await Routes.findByIdAndUpdate(
       id,
       { name, description, shift, tlId },
-      { new: true },
+      { new: true }
     ).populate('tlId');
 
     if (!updatedRoute) {

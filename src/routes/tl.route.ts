@@ -48,7 +48,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const updatedTL = await TLModel.findByIdAndUpdate(
       id,
       { name, shift, position },
-      { new: true },
+      { new: true }
     );
 
     if (!updatedTL) {

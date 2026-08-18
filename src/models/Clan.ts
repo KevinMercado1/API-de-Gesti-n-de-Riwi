@@ -16,7 +16,7 @@ const ClanSchema = new Schema<IClan>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const ClanModel = model<IClan>('Clan', ClanSchema);

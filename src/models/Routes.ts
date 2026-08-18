@@ -18,7 +18,7 @@ const RoutesSchema = new Schema<IRoutes>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const RoutesModel = model<IRoutes>('Routes', RoutesSchema);

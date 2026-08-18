@@ -29,7 +29,7 @@ const CoderSchema = new Schema<ICoder>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const CoderModel = model<ICoder>('Coder', CoderSchema);
