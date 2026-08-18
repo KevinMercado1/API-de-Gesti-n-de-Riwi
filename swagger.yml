@@ -36,15 +36,16 @@ paths:
               type: object
               required:
                 - name
-                - description
+                - shift
                 - position
               properties:
                 name:
                   type: string
-                  example: new TL
-                description:
+                  example: John Doe
+                shift:
                   type: string
-                  example: This is a brief example of a description
+                  enum: [morning, night]
+                  example: morning
                 position:
                   type: string
                   example: Backend Senior Developer
@@ -59,6 +60,29 @@ paths:
           description: Error creating TL
 
   /tls/{id}:
+    get:
+      summary: Get a TL by ID
+      tags:
+        - TL
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the TL to retrieve
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: TL found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TL'
+        '404':
+          description: TL not found
+        '500':
+          description: Error fetching TL
     put:
       summary: Update an existing TL
       tags:
@@ -70,7 +94,7 @@ paths:
           schema:
             type: string
           description: ID of the TL to update
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
       requestBody:
         required: true
         content:
@@ -80,10 +104,11 @@ paths:
               properties:
                 name:
                   type: string
-                  example: updated task
-                description:
+                  example: John Updated
+                shift:
                   type: string
-                  example: Updated description
+                  enum: [morning, night]
+                  example: night
                 position:
                   type: string
                   example: Tech Lead
@@ -109,7 +134,7 @@ paths:
           schema:
             type: string
           description: ID of the TL to delete
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '200':
           description: TL deleted successfully
@@ -157,16 +182,25 @@ paths:
                 - name
                 - email
                 - status
+                - shift
+                - clanId
               properties:
                 name:
                   type: string
-                  example: new coder
+                  example: Coder Name
                 email:
                   type: string
                   example: coder@example.com
                 status:
                   type: string
                   example: Active
+                shift:
+                  type: string
+                  enum: [morning, night]
+                  example: morning
+                clanId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '201':
           description: Coder created successfully
@@ -174,10 +208,87 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Coder'
+        '404':
+          description: Validation error - Specified Clan does not exist
         '500':
           description: Error creating Coder
 
+  /coders/clan/{clanId}:
+    get:
+      summary: Get all Coders belonging to a specific Clan
+      tags:
+        - Coder
+      parameters:
+        - in: path
+          name: clanId
+          required: true
+          schema:
+            type: string
+          description: ID of the Clan
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: List of Coders by Clan retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coder'
+        '404':
+          description: Clan not found
+        '500':
+          description: Error fetching coders by clan
+
+  /coders/route/{routeId}:
+    get:
+      summary: Get all Coders belonging to a specific Route
+      tags:
+        - Coder
+      parameters:
+        - in: path
+          name: routeId
+          required: true
+          schema:
+            type: string
+          description: ID of the Route
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: List of Coders by Route retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coder'
+        '500':
+          description: Error fetching coders by route
+
   /coders/{id}:
+    get:
+      summary: Get a Coder by ID
+      tags:
+        - Coder
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Coder to retrieve
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: Coder found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coder'
+        '404':
+          description: Coder not found
+        '500':
+          description: Error fetching Coder
     put:
       summary: Update an existing Coder
       tags:
@@ -189,7 +300,7 @@ paths:
           schema:
             type: string
           description: ID of the Coder to update
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
       requestBody:
         required: true
         content:
@@ -206,6 +317,13 @@ paths:
                 status:
                   type: string
                   example: Inactive
+                shift:
+                  type: string
+                  enum: [morning, night]
+                  example: night
+                clanId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '200':
           description: Coder updated successfully
@@ -214,7 +332,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Coder'
         '404':
-          description: Coder not found
+          description: Coder not found or Clan does not exist
         '500':
           description: Error updating Coder
     delete:
@@ -228,7 +346,7 @@ paths:
           schema:
             type: string
           description: ID of the Coder to delete
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '200':
           description: Coder deleted successfully
@@ -274,14 +392,19 @@ paths:
               type: object
               required:
                 - name
-                - description
+                - shift
+                - routeId
               properties:
                 name:
                   type: string
-                  example: Clan of Developers
-                description:
+                  example: Clan Gates
+                shift:
                   type: string
-                  example: A clan for developers
+                  enum: [morning, night]
+                  example: morning
+                routeId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '201':
           description: Clan created successfully
@@ -289,10 +412,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Clan'
+        '404':
+          description: Validation error - Specified Route does not exist
         '500':
           description: Error creating Clan
 
   /clans/{id}:
+    get:
+      summary: Get a Clan by ID
+      tags:
+        - Clan
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Clan to retrieve
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: Clan found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clan'
+        '404':
+          description: Clan not found
+        '500':
+          description: Error fetching Clan
     put:
       summary: Update an existing Clan
       tags:
@@ -315,9 +463,13 @@ paths:
                 name:
                   type: string
                   example: Clan Updated
-                description:
+                shift:
                   type: string
-                  example: A clan for developers
+                  enum: [morning, night]
+                  example: night
+                routeId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '200':
           description: Clan updated successfully
@@ -326,7 +478,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Clan'
         '404':
-          description: Clan not found
+          description: Clan not found or Route does not exist
         '500':
           description: Error updating Clan
     delete:
@@ -386,10 +538,23 @@ paths:
               type: object
               required:
                 - name
+                - description
+                - shift
+                - tlId
               properties:
                 name:
                   type: string
-                  example: Route of Developers
+                  example: Backend Route
+                description:
+                  type: string
+                  example: Learn Node.js and Databases
+                shift:
+                  type: string
+                  enum: [morning, night]
+                  example: morning
+                tlId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '201':
           description: Route created successfully
@@ -397,10 +562,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Route'
+        '404':
+          description: Validation error - Specified TL does not exist
         '500':
           description: Error creating Route
 
   /routes/{id}:
+    get:
+      summary: Get a Route by ID
+      tags:
+        - Route
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the Route to retrieve
+          example: 60d5ec49f1b2c4a4e4e9f123
+      responses:
+        '200':
+          description: Route found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '404':
+          description: Route not found
+        '500':
+          description: Error fetching Route
     put:
       summary: Update an existing Route
       tags:
@@ -423,6 +613,16 @@ paths:
                 name:
                   type: string
                   example: Route Updated
+                description:
+                  type: string
+                  example: Updated description
+                shift:
+                  type: string
+                  enum: [morning, night]
+                  example: night
+                tlId:
+                  type: string
+                  example: 60d5ec49f1b2c4a4e4e9f123
       responses:
         '200':
           description: Route updated successfully
@@ -431,7 +631,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Route'
         '404':
-          description: Route not found
+          description: Route not found or TL does not exist
         '500':
           description: Error updating Route
     delete:
@@ -468,18 +668,19 @@ components:
       type: object
       required:
         - name
-        - description
+        - shift
         - position
       properties:
         id:
           type: string
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
         name:
           type: string
-          example: new task
-        description:
+          example: John Doe
+        shift:
           type: string
-          example: This is a brief example of a description
+          enum: [morning, night]
+          example: morning
         position:
           type: string
           example: Backend Senior Developer
@@ -490,42 +691,73 @@ components:
         - name
         - email
         - status
+        - shift
+        - clanId
       properties:
         id:
           type: string
-          example: fvbSVKSLVJNLdvk
+          example: 60d5ec49f1b2c4a4e4e9f123
         name:
           type: string
-          example: new coder
+          example: Coder Name
         email:
           type: string
           example: coder@example.com
         status:
           type: string
           example: Active
+        shift:
+          type: string
+          enum: [morning, night]
+          example: morning
+        clanId:
+          type: string
+          example: 60d5ec49f1b2c4a4e4e9f123
 
     Clan:
       type: object
       required:
         - name
+        - shift
+        - routeId
       properties:
         id:
           type: string
           example: 60d5ec49f1b2c4a4e4e9f123
         name:
           type: string
-          example: Clan of Developers
+          example: Clan Gates
           description: The name of the Clan
+        shift:
+          type: string
+          enum: [morning, night]
+          example: morning
+        routeId:
+          type: string
+          example: 60d5ec49f1b2c4a4e4e9f123
 
     Route:
       type: object
       required:
         - name
+        - description
+        - shift
+        - tlId
       properties:
         id:
           type: string
           example: 60d5ec49f1b2c4a4e4e9f123
         name:
           type: string
-          example: Route of Developers
+          example: Backend Route
           description: The name of the training route
+        description:
+          type: string
+          example: Learn Node.js and Databases
+        shift:
+          type: string
+          enum: [morning, night]
+          example: morning
+        tlId:
+          type: string
+          example: 60d5ec49f1b2c4a4e4e9f123

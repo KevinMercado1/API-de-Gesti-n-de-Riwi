@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const options: swaggerJSDoc.Options = {
@@ -7,25 +6,27 @@ const options: swaggerJSDoc.Options = {
     info: {
       title: 'Riwi Management API',
       version: '1.0.0',
-      description: 'API built with Swagger',
+      description:
+        'API built with Swagger for managing TLs, Coders, Clans, and Routes',
     },
     components: {
       schemas: {
         TL: {
           type: 'object',
-          required: ['name', 'description', 'position'],
+          required: ['name', 'shift', 'position'],
           properties: {
             id: {
               type: 'string',
-              example: 'fvbSVKSLVJNLdvk',
+              example: '60d5ec49f1b2c4a4e4e9f123',
             },
             name: {
               type: 'string',
-              example: 'new task',
+              example: 'John Doe',
             },
-            description: {
+            shift: {
               type: 'string',
-              example: 'This is a brief example of a description',
+              enum: ['morning', 'night'],
+              example: 'morning',
             },
             position: {
               type: 'string',
@@ -35,15 +36,15 @@ const options: swaggerJSDoc.Options = {
         },
         Coder: {
           type: 'object',
-          required: ['name', 'email', 'status'],
+          required: ['name', 'email', 'status', 'shift', 'clanId'],
           properties: {
             id: {
               type: 'string',
-              example: 'fvbSVKSLVJNLdvk',
+              example: '60d5ec49f1b2c4a4e4e9f123',
             },
             name: {
               type: 'string',
-              example: 'new coder',
+              example: 'Coder Name',
             },
             email: {
               type: 'string',
@@ -53,11 +54,20 @@ const options: swaggerJSDoc.Options = {
               type: 'string',
               example: 'Active',
             },
+            shift: {
+              type: 'string',
+              enum: ['morning', 'night'],
+              example: 'morning',
+            },
+            clanId: {
+              type: 'string',
+              example: '60d5ec49f1b2c4a4e4e9f123',
+            },
           },
         },
         Clan: {
           type: 'object',
-          required: ['name', 'description'],
+          required: ['name', 'shift', 'routeId'],
           properties: {
             id: {
               type: 'string',
@@ -65,17 +75,22 @@ const options: swaggerJSDoc.Options = {
             },
             name: {
               type: 'string',
-              example: 'Clan of Developers',
+              example: 'Clan Gates',
             },
-            description: {
+            shift: {
               type: 'string',
-              example: 'A clan for developers',
+              enum: ['morning', 'night'],
+              example: 'morning',
+            },
+            routeId: {
+              type: 'string',
+              example: '60d5ec49f1b2c4a4e4e9f123',
             },
           },
         },
         Route: {
           type: 'object',
-          required: ['name', 'description'],
+          required: ['name', 'description', 'shift', 'tlId'],
           properties: {
             id: {
               type: 'string',
@@ -83,7 +98,20 @@ const options: swaggerJSDoc.Options = {
             },
             name: {
               type: 'string',
-              example: 'Route of Developers',
+              example: 'Backend Route',
+            },
+            description: {
+              type: 'string',
+              example: 'Learn Node.js and Databases',
+            },
+            shift: {
+              type: 'string',
+              enum: ['morning', 'night'],
+              example: 'morning',
+            },
+            tlId: {
+              type: 'string',
+              example: '60d5ec49f1b2c4a4e4e9f123',
             },
           },
         },
