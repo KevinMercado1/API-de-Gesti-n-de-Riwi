@@ -6,9 +6,9 @@ const router = express.Router();
 // Create a new TL
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, description, position } = req.body;
+    const { name, shift, position } = req.body;
 
-    const newTl = await TLModel.create({ name, description, position });
+    const newTl = await TLModel.create({ name, shift, position });
     res.status(201).json(newTl);
   } catch (error) {
     res.status(500).json({ message: 'Error creating TL', error });
@@ -26,7 +26,6 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 // Get a TL by ID
-
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -42,15 +41,14 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // Update a TL by ID
-
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const { name, description, position } = req.body;
+    const { name, shift, position } = req.body;
     const updatedTL = await TLModel.findByIdAndUpdate(
       id,
-      { name, description, position },
-      { new: true }
+      { name, shift, position },
+      { new: true },
     );
 
     if (!updatedTL) {
