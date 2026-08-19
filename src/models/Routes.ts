@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 interface IRoutes extends Document {
   name: string;
   description: string;
   shift: 'morning' | 'night';
-  tlId: Schema.Types.ObjectId;
+  tlId: Types.ObjectId;
 }
 
 const RoutesSchema = new Schema<IRoutes>(

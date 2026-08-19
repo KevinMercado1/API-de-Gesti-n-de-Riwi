@@ -1,0 +1,4 @@
+//Kill mongodb connections
+
+sudo systemctl stop mongod
+sudo kill -9 $(sudo lsof -t -i:27017)

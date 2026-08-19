@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from 'mongoose'; // 1. Importamos Types
+import { Schema, model, Document, Types } from 'mongoose';
 
 interface ICoder extends Document {
   name: string;

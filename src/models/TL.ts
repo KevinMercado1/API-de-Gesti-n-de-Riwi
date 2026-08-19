@@ -1,9 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface ITL {
+interface ITL extends Document {
   name: string;
   position: string;
-  shift: { type: String; enum: ['morning', 'night']; required: true };
+  shift: 'morning' | 'night';
 }
 
 const TLSchema = new Schema<ITL>(
