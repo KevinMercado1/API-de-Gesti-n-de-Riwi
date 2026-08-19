@@ -4,12 +4,35 @@ import ClanModel from '../models/Clan.js';
 
 const router = express.Router();
 
+// 1. Get all coders belonging to a specific clan
+
+// URL: GET http://localhost:3000/coders/clan/ID_DEL_CLAN
+router.get('/clan/:clanId', async (req: Request, res: Response) => {
+  try {
+    const { clanId } = req.params;
+    const coders = await Coder.find({ clanId }).populate('clanId');
+    res.status(200).json(coders);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching coders by clan', error });
+  }
+});
+
+// 2. Get all coders belonging to a specific route
+router.get('/route/:routeId', async (req: Request, res: Response) => {
+  try {
+    const { routeId } = req.params;
+    const coders = await Coder.find({ routeId }).populate('clanId');
+    res.status(200).json(coders);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching coders by route', error });
+  }
+});
+
 // Create a new Coder
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, email, status, shift, clanId } = req.body;
+    const { name, email, status, shift, clanId, routeId } = req.body;
 
-    // Validation: Check if the Clan exists before creating the Coder
     const clanExists = await ClanModel.findById(clanId);
     if (!clanExists) {
       return res.status(404).json({
@@ -17,7 +40,14 @@ router.post('/', async (req: Request, res: Response) => {
       });
     }
 
-    const newCoder = await Coder.create({ name, email, status, shift, clanId });
+    const newCoder = await Coder.create({
+      name,
+      email,
+      status,
+      shift,
+      clanId,
+      routeId,
+    });
     res.status(201).json(newCoder);
   } catch (error) {
     res.status(500).json({ message: 'Error creating Coder', error });
@@ -53,9 +83,8 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const { name, email, status, shift, clanId } = req.body;
+    const { name, email, status, shift, clanId, routeId } = req.body;
 
-    // If a new clanId is sent in the update, validate that it exists
     if (clanId) {
       const clanExists = await ClanModel.findById(clanId);
       if (!clanExists) {
@@ -67,7 +96,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
     const updatedCoder = await Coder.findByIdAndUpdate(
       id,
-      { name, email, status, shift, clanId },
+      { name, email, status, shift, clanId, routeId },
       { new: true }
     ).populate('clanId');
 

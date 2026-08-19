@@ -1,11 +1,12 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose'; // 1. Importamos Types
 
 interface ICoder extends Document {
   name: string;
   email: string;
   status: 'Active' | 'Retired';
   shift: 'morning' | 'night';
-  clanId: Schema.Types.ObjectId;
+  clanId: Types.ObjectId;
+  routeId: Types.ObjectId;
 }
 
 const CoderSchema = new Schema<ICoder>(
@@ -26,6 +27,11 @@ const CoderSchema = new Schema<ICoder>(
     clanId: {
       type: Schema.Types.ObjectId,
       ref: 'Clan',
+      required: true,
+    },
+    routeId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Routes',
       required: true,
     },
   },
